@@ -35,6 +35,37 @@ const getOnePlayerResponseAndValidate = function (err, teams, res, req, response
 }
 
 
+const deleteOnePlayerResponseAndValidate = function (err, team, res, req, response) {
+    if (err) {
+        response.status = 500;
+        response.message = {message : "Couldn't load data from DB"}
+    } else {
+        const playerID = req.params.playerID; 
+        if (!mongoose.isValidObjectId(playerID)) {
+            response.status = 400; 
+            response.message = "Invalid player ID";
+        }
+        const player = team.players.id(req.params.playerID);
+        if (!player) {
+            response.status = 404; 
+            response.message = {message : "Player with this ID absent in DB"};
+            res.status(response.status).json(response.message);
+        } else {
+            team.players.id(req.params.playerID).remove();
+            team.save(function(err, updatedTeam){
+                if (err) {
+                    req.status = 500;
+                    req.message = {message: "Couldn't update data in DB"};
+                } else {
+                        req.status = 201;
+                        req.message = updatedTeam;
+                }
+                res.status(response.status).json(response.message);                
+            })
+        }
+    }
+}
+
 
 const addOnePlayerResponseAndValidate = function (err, team, res, req, response) {
     if (err) {
@@ -74,5 +105,6 @@ const _addPLayer = function(team, res, req, response) {
 module.exports = {
     playersAllResponseAndValidate,
     getOnePlayerResponseAndValidate,
-    addOnePlayerResponseAndValidate
+    addOnePlayerResponseAndValidate,
+    deleteOnePlayerResponseAndValidate
 }

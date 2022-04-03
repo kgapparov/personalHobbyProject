@@ -13,7 +13,8 @@ router.route("/teams")
     .post(teamsController.addOne);
 
 router.route("/teams/:teamID")
-    .get(teamsController.getOne);
+    .get(teamsController.getOne)
+    .delete(teamsController.deleteOne);
     
 
 router.route("/teams/:teamID/players")
@@ -21,6 +22,7 @@ router.route("/teams/:teamID/players")
     .post(playersController.addOne);
 
 router.route("/teams/:teamID/players/:playerID")
-    .get(playersController.getOne);
+    .get(playersController.getOne)
+    .delete(playersController.deleteOne);
 
 module.exports = router

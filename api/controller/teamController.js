@@ -45,3 +45,16 @@ module.exports.addOne = function (req, res) {
 
     Teams.create(newTeam, (err, team) => teamHelpers.addOneTeamResponse(err, team, res, response));
 }
+
+module.exports.deleteOne = function (req, res) {
+    const response = {
+        status: 200, 
+        message:{}
+    }
+    const teamID = req.params.teamID;
+    if (!teamID || !mongoose.isValidObjectId(teamID)) {
+        response.status = 400;
+        response.message = {message : "params is absent or invalid"};
+    } 
+    Teams.deleteOne({_id: teamID}).exec((err, team) => teamHelpers.teamDeleteOneResponseOne(err, team, res, response));
+}

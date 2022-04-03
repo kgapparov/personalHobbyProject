@@ -30,3 +30,12 @@ module.exports.addOne = function(req, res) {
     const teamID = req.params.teamID;
     Teams.findById(teamID).select("players").exec((err, team) => playerHelpers.addOnePlayerResponseAndValidate(err, team, res, req, response));
 }
+
+module.exports.deleteOne = function(req, res) {
+    const response = {
+        status: 200,
+        message: {}
+    }
+    const teamID = req.params.teamID;
+    Teams.findById(teamID).select("players").exec((err, teams) => playerHelpers.deleteOnePlayerResponseAndValidate(err, teams, res, req, response));
+}

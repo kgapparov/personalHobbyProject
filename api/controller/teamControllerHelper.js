@@ -15,6 +15,17 @@ const teamResponseOne = function (err, team, res, response) {
     res.status(response.status).json(response.message);
 }
 
+const teamDeleteOneResponseOne = function (err, team, res, response) {
+    if (err) {
+        response.status = 500;
+        response.message = {message : "Couldn't delete file from DB"};
+    } else {
+        response.status = 201;
+        response.message = {message : "item deleted successfully"}
+    }
+    res.status(response.status).json(response.message);
+}
+
 const addOneTeamResponse = function (err, team, res, response) {
     if (err) {
         response.status =500;
@@ -41,5 +52,6 @@ const getAllTeamResponse = function (err, teams, res) {
 module.exports = {
     teamResponseOne,
     addOneTeamResponse,
-    getAllTeamResponse
+    getAllTeamResponse,
+    teamDeleteOneResponseOne
 }

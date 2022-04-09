@@ -14,7 +14,8 @@ router.route("/teams")
 
 router.route("/teams/:teamID")
     .get(teamsController.getOne)
-    .delete(teamsController.deleteOne);
+    .delete(teamsController.deleteOne)
+    .patch(teamsController.updatePartiall);
     
 
 router.route("/teams/:teamID/players")

@@ -33,6 +33,7 @@ module.exports.addOne = function (req, res) {
         playerCount: parseInt(req.body.playerCount) || 5,
         players: []
     }
+    newTeam.players = [];
     req.body.players.forEach(player => {
         let newPlayer = {
             name: player.name,
@@ -57,4 +58,17 @@ module.exports.deleteOne = function (req, res) {
         response.message = {message : "params is absent or invalid"};
     } 
     Teams.deleteOne({_id: teamID}).exec((err, team) => teamHelpers.teamDeleteOneResponseOne(err, team, res, response));
+}
+
+module.exports.updatePartiall = function (req, res) {
+    const response = {
+        status: 201, 
+        message:{}
+    }
+    const teamID = req.params.teamID;
+    if (!teamID || !mongoose.isValidObjectId(teamID)) {
+        response.status = 400;
+        response.message = {message : "params is absent or invalid"};
+    } 
+    Teams.findById(teamID).exec((err, team) => teamHelpers.teamUpdateAndResponseOne(err, team, res, req,response));
 }

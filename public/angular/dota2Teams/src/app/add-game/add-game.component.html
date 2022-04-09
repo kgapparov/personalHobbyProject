@@ -1,0 +1,55 @@
+<form #teamAddForm="ngForm" (ngSubmit)="createTeam(teamAddForm)">
+<div style="width: 25%;">
+
+        <label for="usr">Team name:</label>
+        <input type="text" name = "teamName" class="form-control"  [(ngModel)]=team.name>
+        
+        <label for="usr">Team owner:</label>
+        <input type="text" name = "teamOwner" class="form-control"  [(ngModel)]=team.owner>
+
+        <h3>Add players to team </h3>
+        <table class="table table-striped" *ngIf="team">
+            <thead>
+                <tr>
+                    <th scope="col">NickName</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">Join Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> <input type="text" class="form-control" name="nickName" [(ngModel)]="player.nickName"> </td>
+                    <td> <input type="text" class="form-control" name = "name" [(ngModel)]="player.name"> </td>
+                    <td> <input type="text" class="form-control" name="position" [(ngModel)]="player.position"> </td>
+                    <td> <input type="text" class="form-control" name = "joinDate" [(ngModel)]="player.joinDate"> </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">AddToList</button>
+      
+</div>
+</form>  
+    <table class="table table-striped" *ngIf="team">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">NickName</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Join Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let player of team.players; index as i">
+                <th scope="row"> {{ i+ 1 }} </th>
+                <td> {{ player.nickName }} </td>
+                <td> {{ player.name }} </td>
+                <td> {{ player.position }} </td>
+                <td> {{ player.joinDate | date: "shortDate" }} </td>
+            </tr>
+        </tbody>
+    </table>
+
+<button type="submit" (click)="removePlayerFromTeam()">remove from list</button>
+<button type="submit" (click)= "addTeam()">Add Team</button>

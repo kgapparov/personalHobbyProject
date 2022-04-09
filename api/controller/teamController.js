@@ -23,6 +23,7 @@ module.exports.getOne = function (req, res) {
 }
 
 module.exports.addOne = function (req, res) {
+    console.log(req.body);
     const response = {
         status: 200, 
         message:{}
@@ -34,16 +35,17 @@ module.exports.addOne = function (req, res) {
         players: []
     }
     newTeam.players = [];
-    req.body.players.forEach(player => {
-        let newPlayer = {
-            name: player.name,
-            nickName: player.nickName, 
-            position: player.position, 
-            joinDate: (Date.parse(player.joinDate))
-        }
-        newTeam.players.push(newPlayer);
-    });
-
+    if (req.body && req.body.players) {
+        req.body.players.forEach(player => {
+            let newPlayer = {
+                name: player.name,
+                nickName: player.nickName, 
+                position: player.position, 
+                joinDate: (Date.parse(player.joinDate))
+            }
+            newTeam.players.push(newPlayer);
+        });
+    }
     Teams.create(newTeam, (err, team) => teamHelpers.addOneTeamResponse(err, team, res, response));
 }
 

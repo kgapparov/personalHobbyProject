@@ -1,0 +1,24 @@
+
+<h2 *ngIf= "team">{{team.name}} - {{ team.owner }}</h2>
+
+Team players list: 
+<table class="table table-striped" *ngIf="team">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">NickName</th>
+            <th scope="col">Name</th>
+            <th scope="col">Position</th>
+            <th scope="col">Join Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let player of team.players; index as i">
+            <th scope="row"> {{ i+ 1 }} </th>
+            <td> {{ player.nickName }} </td>
+            <td> {{ player.name }} </td>
+            <td> {{ player.position }} </td>
+            <td> {{ player.joinDate | date: "shortDate" }} </td>
+        </tr>
+    </tbody>
+</table>

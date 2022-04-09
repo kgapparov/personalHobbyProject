@@ -69,7 +69,7 @@ const teamUpdateAndResponseOne = function (err, team, res, req, response) {
 const addOneTeamResponse = function (err, team, res, response) {
     if (err) {
         response.status =500;
-        response.message({message : "error while saving to DB"});
+        response.message = {message : "error while saving to DB"};
     } else {
         response.status = 200;
         response.message = team;

@@ -12,6 +12,7 @@ import { Players, Team } from '../games/games.component';
 export class AddGameComponent implements OnInit {
   team!: Team; 
   player!: Players;
+  players!: Players[];
   constructor(private service: GameDataService) {
     this.team = new Team();
     this.player = new Players();
@@ -31,7 +32,9 @@ export class AddGameComponent implements OnInit {
 
   createTeam(form: NgForm):void{
     console.log(form.value);
-    this.team.players.push(this.player);
+    
+    // this.team.players.push(this.player);
+    // this.players = Object.assign([], this.team.players);
   }
 
   removePlayerFromTeam(){
@@ -39,7 +42,7 @@ export class AddGameComponent implements OnInit {
   }
 
   addTeam(){
-    console.log(this.team);
+    console.log(this.players);
     this.service.addTeam(this.team).subscribe({
       next: res => console.log("result of adding team " + res),
       error: err => console.log(err),

@@ -19,7 +19,8 @@ export class GameDataService {
   getTeam(id:string):Observable<Team> {
     return this.http.get<Team>(this.#_baseURL + "teams/"+ id);
   }
-  addTeam(team: Team):Observable<any> {
-    return this.http.post<any>(this.#_baseURL + "teams", team);
+  addTeam(team: Team):Observable<Team> {
+    console.log("team to send "+team);
+    return this.http.post<Team>(this.#_baseURL + "teams", team);
   }
 }

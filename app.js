@@ -21,6 +21,8 @@ const headerAccessHandler = function (req, res, next) {
 app.use(loggingHandler);
 
 app.use(headerAccessHandler);
+
+app.use(bodyParser.urlencoded({extended:true}));
 //route 
 app.use("/api", jsonParser ,route);
 

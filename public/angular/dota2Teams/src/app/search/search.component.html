@@ -1,0 +1,11 @@
+<form  #searchForm="ngForm" (ngSubmit) = "serch(searchForm)">
+
+    <input type="text" name="search" [(ngModel)]= "searchContent"> 
+
+    <button type="submit">Search</button>
+</form>
+
+<h2>Teams of the tournament</h2>
+<ul>
+    <li *ngFor="let team of teams " > <a routerLink="/teams/{{team._id}}">{{ team.name }}</a> </li>
+</ul>

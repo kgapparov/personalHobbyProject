@@ -1,5 +1,4 @@
 require("dotenv").config();
-// const regex = require("regex");
 const mongoose = require("mongoose");
 const teamHelpers = require("./teamControllerHelper");
 const Teams = mongoose.model(process.env.TEAM_MODEL);
@@ -9,10 +8,10 @@ const Teams = mongoose.model(process.env.TEAM_MODEL);
 module.exports.getAll = function (req, res) {
     Teams.find().exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
 }
-// module.exports.searchAll = function (req, res) {
-//     regex = new regex("No", "i");
-//     Teams.find({name: {$regex: regex}}).exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
-// }
+module.exports.searchAll = function (req, res) {
+    const name = req.query.name; 
+    Teams.find({name: {"$regex": name ,'$options':'i'}}).exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
+}
 
 
 module.exports.getOne = function (req, res) {

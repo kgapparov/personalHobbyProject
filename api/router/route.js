@@ -12,8 +12,8 @@ router.route("/teams")
     .get(teamsController.getAll)
     .post(teamsController.addOne)
 
-// router.route("/teams/search")
-//     .get(teamsController.searchAll);
+router.route("/teams/search")
+    .get(teamsController.searchAll);
 
 router.route("/teams/:teamID")
     .get(teamsController.getOne)

@@ -8,6 +8,14 @@ import { Team } from './games/games.component';
   providedIn: 'root'
 })
 export class GameDataService {
+  #_teams:Team[] = [];
+  get teams(): Team[] {
+    return this.#_teams;
+  } 
+  set teams(teams: Team[]) {
+    this.#_teams = teams;
+  }
+  
   #_baseURL!:string; 
   constructor(private http: HttpClient, private route: ActivatedRoute) { 
     this.#_baseURL = environment.TEAM_API_BASE_URL;
@@ -15,6 +23,9 @@ export class GameDataService {
 
   getTeams():Observable<Team[]> {
     return this.http.get<Team[]>(this.#_baseURL+"teams");
+  }
+  searchTeams(name: string):Observable<Team[]> {
+    return this.http.get<Team[]>(this.#_baseURL+"teams/search/?name=" + name);
   }
   getTeam(id:string):Observable<Team> {
     return this.http.get<Team>(this.#_baseURL + "teams/"+ id);

@@ -13,6 +13,7 @@ import { AddGameComponent } from './add-game/add-game.component';
 import { DeleteGameComponent } from './delete-game/delete-game.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     GamesComponent,
     GameComponent,
     AddGameComponent,
-    DeleteGameComponent
+    DeleteGameComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +41,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         component : GamesComponent
       },
       {
+        path: "teams/search",
+        component: SearchComponent
+      },
+      {
         path: "teams/:teamId",
         component: GameComponent
-      }
+      },
+     
     ]),
     NgbModule
   ],

@@ -16,6 +16,7 @@ export class AddGameComponent implements OnInit {
   constructor(private service: GameDataService) {
     this.team = new Team();
     this.player = new Players();
+    this.players = [];
    }
 
   ngOnInit(): void {
@@ -37,13 +38,32 @@ export class AddGameComponent implements OnInit {
     // this.players = Object.assign([], this.team.players);
   }
 
-  removePlayerFromTeam(){
+  removePlayerFromlist(){
     this.team.players.pop();
   }
-
+  addPlayer (form: NgForm) {
+    let newPlayer: Players = new Players(); 
+    newPlayer = Object.assign({
+      name: this.player.name,
+      nickName: this.player.nickName,
+      position: this.player.position, 
+      joinDate: this.player.joinDate
+    }, this.player)
+    this.players.push(newPlayer);
+  }
   addTeam(){
-    console.log(this.players);
-    this.service.addTeam(this.team).subscribe({
+    let newTeam: Team = new Team();
+  
+    newTeam = Object.assign({
+      name: this.team.name, 
+      playersCount: this.team.playersCount,
+      owner: this.team.owner,
+      players: []
+    }, this.team);
+    newTeam.players = this.players;
+    console.log(newTeam);
+
+    this.service.addTeam(newTeam).subscribe({
       next: res => console.log("result of adding team " + res),
       error: err => console.log(err),
       complete: ()=> console.log("Done")

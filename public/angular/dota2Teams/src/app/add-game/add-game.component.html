@@ -1,4 +1,4 @@
-<form #teamAddForm="ngForm" (ngSubmit)="createTeam(teamAddForm)">
+<form #teamAddForm="ngForm" (ngSubmit)="addTeam()">
 <div style="width: 25%;">
 
         <label for="usr">Team name:</label>
@@ -7,30 +7,13 @@
         <label for="usr">Team owner:</label>
         <input type="text" name = "teamOwner" class="form-control"  [(ngModel)]=team.owner>
 
-        <h3>Add players to team </h3>
-        <table class="table table-striped" *ngIf="team">
-            <thead>
-                <tr>
-                    <th scope="col">NickName</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Join Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td> <input type="text" class="form-control" name="nickName" [(ngModel)]="player.nickName"> </td>
-                    <td> <input type="text" class="form-control" name = "name" [(ngModel)]="player.name"> </td>
-                    <td> <input type="text" class="form-control" name="position" [(ngModel)]="player.position"> </td>
-                    <td> <input type="text" class="form-control" name = "joinDate" [(ngModel)]="player.joinDate"> </td>
-                </tr>
-            </tbody>
-        </table>
-        <button type="submit">AddToList</button>
+        <button type="submit">Add team</button>
       
 </div>
 </form>  
-    <!-- <table class="table table-striped" *ngIf="team">
+
+<form #playerForm = "ngForm" (ngSubmit) = addPlayer(playerForm)>
+    <table class="table table-striped" *ngIf="team">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -41,7 +24,28 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor = "let player of team.players; index as i">
+            <tr>
+                <th scope="row"></th>
+                <td> <input type="text" name = "nickName" class="form-control"  [(ngModel)]=player.nickName></td>
+                <td> <input type="text" name = "name" class="form-control"  [(ngModel)]=player.name> </td>
+                <td> <input type="text" name = "position" class="form-control"  [(ngModel)]=player.position> </td>
+                <td> <input type="date" name = "joinDate" class="form-control"  [(ngModel)]=player.joinDate> </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-striped" *ngIf="team">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">NickName</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Join Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let player of players; index as i">
                 <th scope="row"> {{ i+ 1 }} </th>
                 <td> {{ player.nickName }} </td>
                 <td> {{ player.name }} </td>
@@ -50,6 +54,7 @@
             </tr>
         </tbody>
     </table>
+    <!-- <button type="submit" (click)="removePlayerFromlist()">remove player list</button> -->
+    <button type="submit">add player</button>
+</form>
 
-<button type="submit" (click)="removePlayerFromTeam()">remove from list</button>
-<button type="submit" (click)= "addTeam()">Add Team</button> -->

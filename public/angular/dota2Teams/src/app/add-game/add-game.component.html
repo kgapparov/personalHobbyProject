@@ -1,5 +1,5 @@
 <form #teamAddForm="ngForm" (ngSubmit)="addTeam()">
-<div style="width: 25%;">
+<div style="width: 40%;">
 
         <label for="usr">Team name:</label>
         <input type="text" name = "teamName" class="form-control"  [(ngModel)]=team.name>
@@ -12,7 +12,7 @@
 </div>
 </form>  
 
-<form #playerForm = "ngForm" (ngSubmit) = addPlayer(playerForm)>
+<form style="width: 40%;" #playerForm = "ngForm" (ngSubmit) = addPlayer(playerForm)>
     <table class="table table-striped" *ngIf="team">
         <thead>
             <tr>

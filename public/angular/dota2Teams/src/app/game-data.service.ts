@@ -31,7 +31,16 @@ export class GameDataService {
     return this.http.get<Team>(this.#_baseURL + "teams/"+ id);
   }
   addTeam(team: Team):Observable<Team> {
-    console.log("team to send "+team);
     return this.http.post<Team>(this.#_baseURL + "teams", team);
+  }
+  deleteTeam(teamId:string) {
+    return this.http.delete<any>(this.#_baseURL + "teams/" + teamId);
+  }
+  refreshTeams(){
+    this.getTeams().subscribe({
+      next: teams => this.#_teams = teams, 
+      error: err => console.log(err),
+      complete : () => console.log("Done")
+    })
   }
 }

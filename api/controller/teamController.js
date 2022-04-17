@@ -68,14 +68,18 @@ module.exports.addOne = function (req, res) {
                 position: player.position, 
                 joinDate: (Date.parse(player.joinDate)) || new Date()
             }
+            newTeam.playerCount += 1;
             newTeam.players.push(newPlayer);
             console.log(newTeam);
         });
     }
     Teams.create(newTeam)
     .then((newTeam) => utils.onSuccessMessageHandler(response, process.env.CREATE_SUCCESS_CODE, newTeam))
-    .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
-    .finally(()=> utils.responseRequest(response, res));
+    .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_CODE, err.message))
+    .finally(()=> {
+        console.log(response);
+        utils.responseRequest(response, res)
+    });
 }
 
 module.exports.deleteOne = function (req, res) {

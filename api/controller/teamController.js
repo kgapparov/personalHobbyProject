@@ -1,30 +1,50 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const teamHelpers = require("./teamControllerHelper");
+const utils = require("./utils");
 const Teams = mongoose.model(process.env.TEAM_MODEL);
 
 
 
 module.exports.getAll = function (req, res) {
-    Teams.find().exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
+    const response = {
+        status : process.env.GET_SUCCESS_CODE, 
+        message : {}
+    }
+    Teams.find()
+    .then(teams => utils.onSuccessMessageHandler(response, process.env.GET_SUCCESS_CODE, teams))
+    .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
+    .finally(()=> utils.responseRequest(response, res));
 }
+
 module.exports.searchAll = function (req, res) {
     const name = req.query.name; 
     Teams.find({name: {"$regex": name ,'$options':'i'}}).exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
 }
 
-
 module.exports.getOne = function (req, res) {
     const response = {
-        status: 200, 
+        status: process.env.GET_SUCCESS_CODE, 
         message:{}
     }
     const teamID = req.params.teamID;
     if (!teamID || !mongoose.isValidObjectId(teamID)) {
-        response.status = 400;
-        response.message = {message : "params is absent or invalid"};
-    } 
-    Teams.findById(teamID).exec((err, team) => teamHelpers.teamResponseOne(err, team, res, response));
+        utils.onErrorMessageHandler(response, process.env.INVALID_INPUT_CODE, process.env.INVALID_PARAMETER_MSG);
+    } else {
+        Teams.findById(teamID)
+        .then(team => {
+            if (!team) {
+                utils.onErrorMessageHandler(response,process.env.NOT_FOUND_CODE, process.env.NOT_FOUND_MSG);
+            } else {
+                utils.onSuccessMessageHandler(response, process.env.GET_SUCCESS_CODE, team);
+            }
+        })
+        .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
+        .finally(()=> utils.responseRequest(response, res));
+    }
+    if (response.status != process.env.GET_SUCCESS_CODE) {
+        utils.responseRequest(response, res);
+    }
 }
 
 module.exports.addOne = function (req, res) {
@@ -36,7 +56,7 @@ module.exports.addOne = function (req, res) {
     const newTeam = {
         name: req.body.name,
         owner: req.body.owner, 
-        playerCount: parseInt(req.body.playerCount) || 5,
+        playerCount: parseInt(req.body.playerCount) || 0,
         players: []
     }
     newTeam.players = [];
@@ -52,7 +72,10 @@ module.exports.addOne = function (req, res) {
             console.log(newTeam);
         });
     }
-    Teams.create(newTeam, (err, team) => teamHelpers.addOneTeamResponse(err, team, res, response));
+    Teams.create(newTeam)
+    .then((newTeam) => utils.onSuccessMessageHandler(response, process.env.CREATE_SUCCESS_CODE, newTeam))
+    .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
+    .finally(()=> utils.responseRequest(response, res));
 }
 
 module.exports.deleteOne = function (req, res) {
@@ -62,10 +85,15 @@ module.exports.deleteOne = function (req, res) {
     }
     const teamID = req.params.teamID;
     if (!teamID || !mongoose.isValidObjectId(teamID)) {
-        response.status = 400;
-        response.message = {message : "params is absent or invalid"};
-    } 
-    Teams.deleteOne({_id: teamID}).exec((err, team) => teamHelpers.teamDeleteOneResponseOne(err, team, res, response));
+       utils.onErrorMessageHandler(response, process.env.INVALID_INPUT_CODE, process.env.INVALID_PARAMETER_MSG);
+       utils.responseRequest(response, res);
+    } else {
+        Teams.deleteOne({_id: teamID}) 
+        .then(utils.onSuccessMessageHandler(response, process.env.DELETE_SUCCESS_CODE, process.env.DELETED_SUCCESS_MSG))
+        .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
+        .finally(()=> utils.responseRequest(response, res));
+    }
+    
 }
 
 module.exports.updatePartiall = function (req, res) {
@@ -75,8 +103,8 @@ module.exports.updatePartiall = function (req, res) {
     }
     const teamID = req.params.teamID;
     if (!teamID || !mongoose.isValidObjectId(teamID)) {
-        response.status = 400;
-        response.message = {message : "params is absent or invalid"};
-    } 
-    Teams.findById(teamID).exec((err, team) => teamHelpers.teamUpdateAndResponseOne(err, team, res, req,response));
+        utils.onErrorMessageHandler(response, process.env.INVALID_INPUT_CODE, process.env.INVALID_PARAMETER_MSG);
+        utils.responseRequest(response, res);
+    } else 
+        Teams.findById(teamID).exec((err, team) => teamHelpers.teamUpdateAndResponseOne(err, team, res, req,response));
 }

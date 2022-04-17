@@ -11,59 +11,46 @@ const playersAllResponseAndValidate = function (err, teams, res, response) {
 }
 
 
-const getOnePlayerResponseAndValidate = function (err, teams, res, req, response) {
-    if (err) {
-        response.status = 500;
-        response.message = {message : "Couldn't load data from DB"}
-    } else {
+const getOnePlayerResponseAndValidate = function (teams, req) {
+    return new Promise((resolve, reject) => {
         const playerID = req.params.playerID; 
         if (!mongoose.isValidObjectId(playerID)) {
-            response.status = 400; 
-            response.message = "Invalid player ID";
+            reject(new TypeError("Invalid player ID is  provided"));
         } else {
             const player = teams.players.id(req.params.playerID);
             if (!player) {
-                response.status = 404; 
-                response.message = {message : "Player with this ID absent in DB"};
+               reject(new MediaError("The player with this id is Empty!"));
             } else {
-                response.status = 200; 
-                response.message = player;
+                resolve(player);
             }
         }
-    }
-    res.status(response.status).json(response.message);
+})
 }
 
 
-const deleteOnePlayerResponseAndValidate = function (err, team, res, req, response) {
-    if (err) {
-        response.status = 500;
-        response.message = {message : "Couldn't load data from DB"}
-    } else {
+
+const deleteOnePlayerResponseAndValidate = function (teams, req) {
+    return new Promise((resolve, reject) => {
         const playerID = req.params.playerID; 
         if (!mongoose.isValidObjectId(playerID)) {
-            response.status = 400; 
-            response.message = "Invalid player ID";
-        }
-        const player = team.players.id(req.params.playerID);
-        if (!player) {
-            response.status = 404; 
-            response.message = {message : "Player with this ID absent in DB"};
-            res.status(response.status).json(response.message);
+            reject(new TypeError("Invalid player ID is  provided"));
         } else {
-            team.players.id(req.params.playerID).remove();
-            team.save(function(err, updatedTeam){
-                if (err) {
-                    req.status = 500;
-                    req.message = {message: "Couldn't update data in DB"};
-                } else {
-                        req.status = 201;
-                        req.message = updatedTeam;
-                }
-                res.status(response.status).json(response.message);                
-            })
+            const player = teams.players.id(req.params.playerID);
+            if (!player) {
+               reject(new EvalError("The player with this id is Empty!"));
+            } else {
+                player.remove();
+                teams.save(function(err, updatedTeams) {
+                    if (err) {
+                        reject(err)
+                    } else {
+                        console.log("deleted");
+                        resolve(updatedTeams);
+                    }
+                })
+            }
         }
-    }
+})
 }
 
 

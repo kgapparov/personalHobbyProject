@@ -17,7 +17,7 @@ export class GameComponent implements OnInit {
     const id =  this.route.snapshot.params["teamId"];
     this.service.getTeam(id).subscribe({
       next: team => this.#_team = team,
-      error: err => console.log(err), 
+      error: err => console.log(err),
       complete: ()=> console.log("done!")
     });
   }

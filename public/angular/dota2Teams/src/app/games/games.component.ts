@@ -35,7 +35,7 @@ export class Players {
 }
 
 export class Team {
-  #id!: string;
+  #_id!: string;
   #_name!: string;
   #_players!: Players[];
   constructor() {
@@ -50,10 +50,10 @@ export class Team {
     this.#_name = name; 
   }
   get _id():string {
-    return this.#id;
+    return this.#_id;
   }
   set _id(id : string) {
-    this.#id = id; 
+    this.#_id = id; 
   }
   get players():Players[] {
     return this.#_players; 

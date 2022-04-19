@@ -1,7 +1,10 @@
-<h2>Teams of the tournament</h2>
-<ul>
-    <li *ngFor="let team of teams " > <a routerLink="/teams/{{team._id}}">{{ team.name }}</a><app-delete-game [gameId] = "team._id"></app-delete-game> </li>
-</ul>
-
-
-<app-add-game></app-add-game>
+<div class="container">
+  <h2>Teams of the tournament</h2>
+  <div class="container" *ngFor="let team of teams ">
+    <div class="row">
+      <div class="col-4 "> <a routerLink="/teams/{{team._id}}">{{ team.name }}</a></div>
+      <div class="col-8"><app-delete-game [gameId] = "team._id"></app-delete-game> </div>
+    </div>
+  </div>
+<!--  <app-add-game></app-add-game>-->
+</div>

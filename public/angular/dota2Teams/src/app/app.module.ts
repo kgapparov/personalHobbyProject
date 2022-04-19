@@ -14,6 +14,8 @@ import { DeleteGameComponent } from './delete-game/delete-game.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SearchComponent } from './search/search.component';
     GameComponent,
     AddGameComponent,
     DeleteGameComponent,
-    SearchComponent
+    SearchComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -45,10 +49,17 @@ import { SearchComponent } from './search/search.component';
         component: SearchComponent
       },
       {
+        path: "teams/add",
+        component: AddGameComponent
+      },
+      {
+        path: "users/signup",
+        component: SignupComponent
+      },
+      {
         path: "teams/:teamId",
         component: GameComponent
-      },
-     
+      }
     ]),
     NgbModule
   ],

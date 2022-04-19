@@ -24,3 +24,7 @@ module.exports.onSuccessMessageHandler = function (response, statusCode, message
     response["status"] = statusCode, 
     response["message"] = message
 }
+
+module.exports.blankPage = function(req, res) {
+    res.status(200).json("not implemented page yet.");
+}

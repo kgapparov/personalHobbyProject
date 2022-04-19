@@ -1,60 +1,64 @@
-<form #teamAddForm="ngForm" (ngSubmit)="addTeam()">
-<div style="width: 40%;">
+<div class="container">
+  <form #teamAddForm="ngForm" (ngSubmit)="addTeam()">
+    <div style="width: 40%;">
 
-        <label for="usr">Team name:</label>
-        <input type="text" name = "teamName" class="form-control"  [(ngModel)]=team.name>
-        
-        <label for="usr">Team owner:</label>
-        <input type="text" name = "teamOwner" class="form-control"  [(ngModel)]=team.owner>
+      <label for="">Team name:</label>
+      <input type="text" name = "teamName" class="form-control"  [(ngModel)]=team.name>
 
-        <button type="submit">Add team</button>
-      
+      <label for="">Team owner:</label>
+      <input type="text" name = "teamOwner" class="form-control"  [(ngModel)]=team.owner>
+
+      <button type="submit">Add team</button>
+
+    </div>
+  </form>
 </div>
-</form>  
 
-<form style="width: 40%;" #playerForm = "ngForm" (ngSubmit) = addPlayer(playerForm)>
+<div class="container">
+  <form style="width: 40%;" #playerForm = "ngForm" (ngSubmit) = addPlayer(playerForm)>
     <table class="table table-striped" *ngIf="team">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">NickName</th>
-                <th scope="col">Name</th>
-                <th scope="col">Position</th>
-                <th scope="col">Join Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row"></th>
-                <td> <input type="text" name = "nickName" class="form-control"  [(ngModel)]=player.nickName></td>
-                <td> <input type="text" name = "name" class="form-control"  [(ngModel)]=player.name> </td>
-                <td> <input type="text" name = "position" class="form-control"  [(ngModel)]=player.position> </td>
-                <td> <input type="date" name = "joinDate" class="form-control"  [(ngModel)]=player.joinDate> </td>
-            </tr>
-        </tbody>
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NickName</th>
+        <th scope="col">Name</th>
+        <th scope="col">Position</th>
+        <th scope="col">Join Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row"></th>
+        <td> <input type="text" name = "nickName" class="form-control"  [(ngModel)]=player.nickName></td>
+        <td> <input type="text" name = "name" class="form-control"  [(ngModel)]=player.name> </td>
+        <td> <input type="text" name = "position" class="form-control"  [(ngModel)]=player.position> </td>
+        <td> <input type="date" name = "joinDate" class="form-control"  [(ngModel)]=player.joinDate> </td>
+      </tr>
+      </tbody>
     </table>
 
     <table class="table table-striped" *ngIf="team">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">NickName</th>
-                <th scope="col">Name</th>
-                <th scope="col">Position</th>
-                <th scope="col">Join Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor = "let player of players; index as i">
-                <th scope="row"> {{ i+ 1 }} </th>
-                <td> {{ player.nickName }} </td>
-                <td> {{ player.name }} </td>
-                <td> {{ player.position }} </td>
-                <td> {{ player.joinDate | date: "shortDate" }} </td>
-            </tr>
-        </tbody>
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NickName</th>
+        <th scope="col">Name</th>
+        <th scope="col">Position</th>
+        <th scope="col">Join Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor = "let player of players; index as i">
+        <th scope="row"> {{ i+ 1 }} </th>
+        <td> {{ player.nickName }} </td>
+        <td> {{ player.name }} </td>
+        <td> {{ player.position }} </td>
+        <td> {{ player.joinDate | date: "shortDate" }} </td>
+      </tr>
+      </tbody>
     </table>
     <!-- <button type="submit" (click)="removePlayerFromlist()">remove player list</button> -->
     <button type="submit">add player</button>
-</form>
+  </form>
 
+</div>

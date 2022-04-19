@@ -10,7 +10,7 @@ import { Players, Team } from '../games/games.component';
   styleUrls: ['./add-game.component.css']
 })
 export class AddGameComponent implements OnInit {
-  team!: Team; 
+  team!: Team;
   player!: Players;
   players!: Players[];
   constructor(private service: GameDataService) {
@@ -24,7 +24,7 @@ export class AddGameComponent implements OnInit {
     this.team.name = "No Name";
     this.team.owner = "No Name";
     this.team.players = [];
-    this.team.playersCount = 0; 
+    this.team.playersCount = 0;
     this.player.name = "No Name",
     this.player.nickName = "NickName",
     this.player.position = 0
@@ -33,7 +33,7 @@ export class AddGameComponent implements OnInit {
 
   createTeam(form: NgForm):void{
     console.log(form.value);
-    
+
     // this.team.players.push(this.player);
     // this.players = Object.assign([], this.team.players);
   }
@@ -42,20 +42,21 @@ export class AddGameComponent implements OnInit {
     this.team.players.pop();
   }
   addPlayer (form: NgForm) {
-    let newPlayer: Players = new Players(); 
+    let newPlayer: Players = new Players();
     newPlayer = Object.assign({
       name: this.player.name,
       nickName: this.player.nickName,
-      position: this.player.position, 
+      position: this.player.position,
       joinDate: this.player.joinDate
     }, this.player)
     this.players.push(newPlayer);
+    this.ngOnInit();
   }
   addTeam(){
     let newTeam: Team = new Team();
-  
+
     newTeam = Object.assign({
-      name: this.team.name, 
+      name: this.team.name,
       playersCount: this.team.playersCount,
       owner: this.team.owner,
       players: []

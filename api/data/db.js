@@ -1,6 +1,7 @@
 require("dotenv").config();
 require("../data/tournament-model");
 require("../data/team-model");
+require("../data/user-model");
 const mongoose = require("mongoose");
 
 

@@ -1,7 +1,7 @@
 
 <h2 *ngIf= "team">{{team.name}} - {{ team.owner }}</h2>
 
-Team players list: 
+Team players list:
 <table class="table table-striped" *ngIf="team">
     <thead>
         <tr>
@@ -23,4 +23,4 @@ Team players list:
     </tbody>
 </table>
 
-<app-delete-game [gameId] = "team._id" ></app-delete-game>
+<app-delete-game [gameId] = "team._id"  *ngIf="isLogged"></app-delete-game>

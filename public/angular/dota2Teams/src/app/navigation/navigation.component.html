@@ -1,3 +1,4 @@
+<img src="../../assets/logo.png" alt="gameLogo">
 <ul class="nav">
      <li class="nav-item">
        <a class="nav-link active" aria-current="page" routerLink="">Home</a>
@@ -8,11 +9,17 @@
      <li class="nav-item">
       <a class="nav-link" routerLink="/teams/search">Search</a>
      </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf = "isLoggedIn">
         <a class="nav-link" routerLink="/teams/add">Team Register</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf = "!isLoggedIn">
         <a class="nav-link" routerLink="/users/signup">Sign up</a>
       </li>
-      <app-login></app-login>
-   </ul>
+      <li class="nav-item" *ngIf = "isLoggedIn">
+        <a class="nav-link" routerLink="/users/profile">Profile</a>
+      </li>
+      <li class = "nav-item">
+        <app-login></app-login>
+      </li>
+</ul>
+

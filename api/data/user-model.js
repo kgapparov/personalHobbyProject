@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-const {environment} = require("../../public/angular/dota2Teams/src/environments/environment");
 
 
 const User = mongoose.Schema({

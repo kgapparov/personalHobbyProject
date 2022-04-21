@@ -7,19 +7,23 @@ const Teams = mongoose.model(process.env.TEAM_MODEL);
 
 
 module.exports.getAll = function (req, res) {
+    let count = req.params["count"] || req.query["count"] || 5;
+    let offset = req.params["offset"] || req.query["offset"] || 0;
     const response = {
         status : process.env.GET_SUCCESS_CODE, 
         message : {}
     }
-    Teams.find()
+    Teams.find().skip(offset).limit(count)
     .then(teams => utils.onSuccessMessageHandler(response, process.env.GET_SUCCESS_CODE, teams))
     .catch(err => utils.onErrorMessageHandler(response, process.env.INTERNAL_ERROR_MSG, err))
     .finally(()=> utils.responseRequest(response, res));
 }
 
 module.exports.searchAll = function (req, res) {
+    let count = req.params["count"] || req.query["count"] || 8;
+    let offset = req.params["offset"] || req.query["offset"] || 0;
     const name = req.query.name; 
-    Teams.find({name: {"$regex": name ,'$options':'i'}}).exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
+    Teams.find({name: {"$regex": name ,'$options':'i'}}).skip(offset).limit(count).exec((err, teams) => teamHelpers.getAllTeamResponse(err, teams, res));
 }
 
 module.exports.getOne = function (req, res) {

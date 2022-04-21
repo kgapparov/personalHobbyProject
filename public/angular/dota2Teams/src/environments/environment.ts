@@ -4,8 +4,9 @@
 
 export const environment = {
   production: true,
-  TEAM_API_BASE_URL : "Link to root api"
-
+  TEAM_API_BASE_URL : "Link to root api",
+  USER_AIP_BASE_URL : "URI for user registering API",
+  USER_LOGIN_URL : "check for user credentials"
 };
 
 /*

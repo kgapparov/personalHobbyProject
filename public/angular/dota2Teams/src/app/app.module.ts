@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -16,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchComponent } from './search/search.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { SignupComponent } from './signup/signup.component';
     DeleteGameComponent,
     SearchComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -57,13 +60,17 @@ import { SignupComponent } from './signup/signup.component';
         component: SignupComponent
       },
       {
+        path: "users/profile",
+        component: ProfileComponent
+      },
+      {
         path: "teams/:teamId",
         component: GameComponent
       }
     ]),
     NgbModule
   ],
-  providers: [],
+  providers: [JwtHelperService, {provide: JWT_OPTIONS, useValue: JWT_OPTIONS}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

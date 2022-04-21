@@ -3,7 +3,7 @@
   <div class="container" *ngFor="let team of teams ">
     <div class="row">
       <div class="col-4 "> <a routerLink="/teams/{{team._id}}">{{ team.name }}</a></div>
-      <div class="col-8"><app-delete-game [gameId] = "team._id"></app-delete-game> </div>
+      <div class="col-8" *ngIf = "isLoggedIn"><app-delete-game [gameId] = "team._id"></app-delete-game> </div>
     </div>
   </div>
 <!--  <app-add-game></app-add-game>-->

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationDataService} from "../authentication-data.service";
 
 @Component({
   selector: 'app-navigation',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit {
+  #_isLoggedIn!: boolean;
 
-  constructor() { }
+  get isLoggedIn():boolean {
+    return this._authService.isAuthenticated;
+  }
+  set isLoggedIn(res:boolean ) {
+    this._authService.isAuthenticated = res;
+  }
+  constructor(private _authService: AuthenticationDataService) { }
 
   ngOnInit(): void {
-  }
 
+  }
 }

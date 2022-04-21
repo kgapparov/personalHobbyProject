@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameDataService } from '../game-data.service';
 import { Team } from '../games/games.component';
+import {AuthenticationDataService} from "../authentication-data.service";
 
 @Component({
   selector: 'app-game',
@@ -11,7 +12,11 @@ import { Team } from '../games/games.component';
 export class GameComponent implements OnInit {
 
   #_team!:Team;
-  constructor(private service : GameDataService, private route: ActivatedRoute) { }
+
+  get isLogged() {
+    return this._authDataService.isAuthenticated;
+  }
+  constructor(private service : GameDataService, private route: ActivatedRoute, private _authDataService:AuthenticationDataService) { }
 
   ngOnInit(): void {
     const id =  this.route.snapshot.params["teamId"];
